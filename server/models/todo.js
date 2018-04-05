@@ -1,24 +1,33 @@
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-let TodoSchema = mongoose.Schema({
+const TodoSchema = mongoose.Schema({
     text: {
         type: String
     },
     status: {
         type: String
+    },
+    order: {
+        type: Number,
+        default: 0
     }
 });
 
-let Todo = module.exports = mongoose.model('Todo', TodoSchema);
+const Todo = module.exports = mongoose.model('Todo', TodoSchema);
 
 module.exports.getTodos = (callback) => {
     Todo.find({}, callback);
 };
 
-module.exports.removeTodoByText = (isbn, callback) => {
-    Todo.remove({text: text}, callback);
+module.exports.removeTodoById = (id, callback) => {
+    Todo.findOneAndRemove({_id: id}, callback);
 };
 
 module.exports.addTodo = (newTodo, callback) => {
     newTodo.save(callback);
 };
+
+// module.exports.changeOrder = (previousIndex, newIndex, callback) => {
+//
+// };
+

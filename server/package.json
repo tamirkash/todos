@@ -1,23 +1,19 @@
 {
-  "name": "react-playground-server",
+  "name": "todos-server",
   "version": "1.0.0",
-  "description": "Sample server",
+  "description": "todos server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "bcryptjs": "*",
     "body-parser": "*",
     "cookie-parser": "*",
     "express": "*",
     "express-session": "*",
     "express-validator": "^4.3.0",
     "mongojs": "^2.4.1",
-    "mongoose": "*",
-    "passport": "*",
-    "passport-http": "*",
-    "passport-local": "*"
+    "mongoose": "*"
   },
   "author": "Tamir Kashinsky",
   "license": "ISC"

@@ -1,11 +1,11 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const expressValidator = require('express-validator');
-const mongoose = require('mongoose');
+const express = require('express'),
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    expressValidator = require('express-validator'),
+    mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/todos');
-const db = mongoose.connection;
-const app = express();
+const db = mongoose.connection,
+    app = express();
 
 const todos = require('./routes/todos');
 

@@ -1,0 +1,19 @@
+.form-control {
+    width: 500px !important;
+}
+
+.navbar-header {
+    margin-right: 50px !important;
+}
+
+.navbar .container {
+    margin-left: 0;
+}
+
+@media (min-width: 768px) {
+    .navbar-form {
+        position: absolute;
+        left: 150px;
+        padding-left: 0;
+    }
+}
