@@ -16,19 +16,24 @@ export class TodoList extends React.Component {
 
     componentDidMount(){
         this.props.fetchTodos();
+        this.props.getStatusList();
     }
 
     componentWillReceiveProps(props){
         this.setState({
-            todos: props.todos
+            todos: props.todos,
+            listenToHover: !props.isStatusOpen
         })
     }
 
     onSortEnd = ({oldIndex, newIndex}) => {
+        const newTodos = arrayMove(this.state.todos, oldIndex, newIndex);
         this.setState({
-            todos: arrayMove(this.state.todos, oldIndex, newIndex),
+            todos: newTodos,
             listenToHover: true
-        })
+        });
+
+        this.props.reorderTodos(newTodos);
     };
 
     onSortStart = () => {
@@ -51,6 +56,7 @@ export class TodoList extends React.Component {
 }
 
 TodoList.propTypes = {
+    getStatusList: PropTypes.func.isRequired,
     removeTodo: PropTypes.func.isRequired,
     todos: PropTypes.array.isRequired,
     fetchTodos: PropTypes.func.isRequired

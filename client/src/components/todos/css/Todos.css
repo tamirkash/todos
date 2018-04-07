@@ -1,18 +1,45 @@
 .todo-list-item {
     cursor: default;
     list-style-type: none;
-    padding: 10px;
-    width: 500px;
-    border: 1px solid #d1d1d1;
+    width: fit-content;
     margin-bottom: -1px;
     background: white;
     display: flex;
+    border: 1px solid #d1d1d1;
+    padding: 10px;
     align-items: center;
+}
+
+.todo-list-item-main {
+    width: 500px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #d1d1d1;;
+}
+
+.btn-default.focus, .btn-default:focus, .btn-default.active,
+.btn-default:active, .open>.dropdown-toggle.btn-default, .btn-default.active,
+.btn-default:active, .open>.dropdown-toggle.btn-default, .btn-default:hover,
+.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover,
+.btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover,
+.open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus,
+.open>.dropdown-toggle.btn-default:hover {
+    background-color: white;
+    border-color: #ccc;
+    box-shadow: none;
+}
+
+.todo-list-item-status, .todo-list-item-status button {
+    width: 95px;
+}
+
+.todo-list-item-status > div.btn-toolbar {
+    margin: 0;
 }
 
 .todo-list-item-text {
     font-size: 17px;
-    width: 370px;
+    width: 410px;
 }
 
 .todo-list-item-handle {
@@ -28,12 +55,15 @@
 }
 
 .todo-list-item-remove {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
     margin-left: auto;
+    margin-right: 10px;
 }
 
-.todo-list-container-listen-hover .todo-list-item:hover .todo-list-item-remove {
-    display: flex;
+.todo-list-container-listen-hover .todo-list-item-main:hover .todo-list-item-remove {
+    visibility: visible;
+    opacity: 1;
 }
 
 .todo-list-container-listen-hover .todo-list-item-handle {
@@ -47,7 +77,7 @@
 @media (min-width: 768px) {
     .todo-list-container {
         position: absolute;
-        left: 150px;
+        left: 151px;
         padding-left: 0;
     }
 }

@@ -1,6 +1,6 @@
 import {SortableContainer} from "react-sortable-hoc";
-import Todo from "./Todo";
 import React from "react";
+import TodoContainer from "./containers/TodoContainer";
 
 const SortableTodoList = SortableContainer(({todos, onRemove, listenToHover}) => {
     const containerStyle = `${listenToHover ? 'todo-list-container todo-list-container-listen-hover' :
@@ -9,7 +9,11 @@ const SortableTodoList = SortableContainer(({todos, onRemove, listenToHover}) =>
     return (
         <ul className={containerStyle}>
             {todos.map((todo, index) => (
-                <Todo key={todo._id} onRemove={() => onRemove(todo._id)} index={index} text={todo.text}/>
+                <TodoContainer key={todo._id}
+                               onRemove={() => onRemove(todo._id)}
+                               index={index}
+                               {...todo}
+                />
             ))}
         </ul>
     );
