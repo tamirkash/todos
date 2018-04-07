@@ -1,11 +1,12 @@
 const express = require('express'),
     router = express.Router(),
-    Todo = require('../models/todo');
+    Todo = require('../models/todo'),
+    Status = require('../models/status');
 
 router.get('/', (req, res) => {
     Todo.getTodos((err, todos) => {
         if(err) throw err;
-        res.json({todos: todos});
+        res.json({todos});
     });
 });
 
@@ -17,22 +18,31 @@ router.delete('/remove/:id', (req, res) => {
 });
 
 router.post('/add', (req, res) => {
-    const newTodo = Object.assign(new Todo(), {
-        text: req.body.text,
-        status: 'Open'
-    });
-
-    Todo.addTodo(newTodo, (err, todo) => {
+    Todo.addTodo(req.body.text, (err, todo) => {
         if(err) throw err;
-        res.json({todo: todo})
+        res.json({todo})
     })
 });
 
-// router.put('/change', (req, res) => {
-//     Todo.changeOrder(req.params.previousIndex, req.params.newIndex, (err, todos) => {
-//         if(err) throw err;
-//         res.status(200).send();
-//     })
-// });
+router.put('/reorder', (req, res) => {
+    Todo.reorder(req.body.todos, (err, todos) => {
+        if(err) throw err;
+        res.status(200).send();
+    })
+});
+
+router.put('/status', (req, res) => {
+    Todo.changeTodoStatus(req.body.id, req.body.status, (err, todo) => {
+        if(err) throw err;
+        res.status(200).send();
+    })
+});
+
+router.get('/status-list', (req, res) => {
+    Status.getStatusList((err, statusList) => {
+        if(err) throw err;
+        res.json({statusList})
+    });
+});
 
 module.exports = router;
