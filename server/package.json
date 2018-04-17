@@ -7,14 +7,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "mongoose-auto-increment": "*",
     "body-parser": "*",
     "cookie-parser": "*",
     "express": "*",
     "express-session": "*",
     "express-validator": "^4.3.0",
     "mongojs": "^2.4.1",
-    "mongoose": "*"
+    "mongoose": "*",
+    "mongoose-auto-increment": "*",
+    "mongoose-double": "0.0.1",
+    "bcryptjs": "*",
+    "passport": "*",
+    "passport-http": "*",
+    "passport-local": "*"
   },
   "author": "Tamir Kashinsky",
   "license": "ISC"
