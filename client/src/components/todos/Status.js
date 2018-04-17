@@ -25,10 +25,8 @@ export default class StatusDropdown extends React.Component {
             <div className="todo-list-item-status">
                 <ButtonToolbar>
                     <DropdownButton
-                        bsStyle="default"
                         title={this.state.status}
-                        noCaret
-                        id="dropdown-no-caret"
+                        id={`split-button-basic-${this.state.status}`}
                         onToggle={this.props.onStatusOpenChange}
                     >
                         {

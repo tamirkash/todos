@@ -8,9 +8,11 @@ import registerServiceWorker from './registerServiceWorker';
 import thunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
 import reducers from "./reducers";
+import initiateAxios from "./api/axios";
 
 const store = createStore(reducers,
                 applyMiddleware(thunk));
+initiateAxios();
 
 ReactDOM.render(
   <Provider store={store}>
@@ -19,5 +21,6 @@ ReactDOM.render(
       </BrowserRouter>
   </Provider>,
   document.getElementById('root')
-)
+);
+
 registerServiceWorker();

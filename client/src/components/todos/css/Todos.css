@@ -29,8 +29,18 @@
     box-shadow: none;
 }
 
-.todo-list-item-status, .todo-list-item-status button {
-    width: 95px;
+.dropdown button {
+    width: 110px;
+    text-align: left;
+}
+
+.todo-list-item-status .caret {
+    float: right;
+    margin-top: 9px;
+}
+
+.todo-list-item-status .dropdown {
+    width: 110px;
 }
 
 .todo-list-item-status > div.btn-toolbar {

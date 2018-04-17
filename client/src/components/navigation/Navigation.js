@@ -1,8 +1,7 @@
-import {Button, Form, FormControl, FormGroup, MenuItem, Nav, Navbar, NavDropdown, NavItem} from "react-bootstrap";
+import {Button, Form, FormControl, FormGroup, MenuItem, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import React, { Component } from "react";
 import './css/Navigation.css';
-import {LinkContainer} from "react-router-bootstrap";
 import {Link} from "react-router-dom";
 
 export default class Navigation extends Component {
@@ -47,17 +46,17 @@ export default class Navigation extends Component {
                     <Navbar.Form>
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
-                                <FormControl type="text" value={this.state.newTodoText} placeholder="Add todo" onChange={this.onChange}/>
+                                <FormControl className="todo-input" type="text" value={this.state.newTodoText} placeholder="Add todo" onChange={this.onChange}/>
                             </FormGroup>{' '}
                             <Button disabled={this.state.newTodoText.length === 0}
                                     type="submit">Add</Button>
                         </Form>
                     </Navbar.Form>
-                    {/*<Nav activeKey={this.props.location} pullRight>*/}
-                        {/*<NavDropdown eventKey={'user-dropdown'} title={this.props.username} id="basic-nav-dropdown">*/}
-                            {/*<MenuItem onClick={this.props.onLogout} eventKey={'/logout'}>Logout</MenuItem>*/}
-                        {/*</NavDropdown>*/}
-                    {/*</Nav>*/}
+                <Nav pullRight>
+                    <NavDropdown eventKey={'user-dropdown'} title={this.props.username} id="basic-nav-dropdown">
+                        <MenuItem onClick={this.props.onLogout} eventKey={'/logout'}>Logout</MenuItem>
+                    </NavDropdown>
+                </Nav>
                 </Navbar.Collapse>
             </Navbar>
         )

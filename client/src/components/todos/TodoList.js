@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import SortableTodoList from "./SortableTodoList";
 import { arrayMove } from 'react-sortable-hoc';
-import './css/Todos.css'
+import './css/Todos.css';
 
 export class TodoList extends React.Component {
     constructor(){
@@ -28,6 +28,7 @@ export class TodoList extends React.Component {
 
     onSortEnd = ({oldIndex, newIndex}) => {
         const newTodos = arrayMove(this.state.todos, oldIndex, newIndex);
+
         this.setState({
             todos: newTodos,
             listenToHover: true
