@@ -91,7 +91,7 @@ export const login = ({username, password}) => {
             },
             error => dispatch({
                 type: LOGIN_FAILURE,
-                payload: error.response.status === 401 ? "Invalid username or password" : "Something went wrong"
+                payload: error.code === 401 ? "Invalid username or password" : error.message
             })
         )
     }
@@ -116,7 +116,7 @@ export const register = (input) => {
             },
             error => dispatch({
                 type: REGISTER_FAILURE,
-                payload: error.response.data.message || "Something went wrong"
+                payload: error.message
             }))
     }
 };

@@ -1,7 +1,9 @@
 import {
     LOGIN_FAILURE,
     LOGIN_REQUEST,
-    LOGIN_SUCCESS, PAGE_UNMOUNT, REGISTER_FAILURE,
+    LOGIN_SUCCESS,
+    PAGE_UNMOUNT,
+    REGISTER_FAILURE,
     REGISTER_REQUEST,
     USER_DISCONNECTED
 } from '../actions/actions';
@@ -26,10 +28,15 @@ const user = (state = initialState, action) => {
                 username: action.payload
             });
         case USER_DISCONNECTED:
-            return Object.assign({}, state, {logged: false, username: null});
+            return Object.assign({}, state, {
+                logged: false,
+                username: null
+            });
         case REGISTER_FAILURE:
         case LOGIN_FAILURE:
-            return Object.assign({}, state, {errorMsg: action.payload});
+            return Object.assign({}, state, {
+                errorMsg: action.payload
+            });
         default:
             return state;
     }

@@ -21,7 +21,9 @@ const todos = (state = [], action) => {
         case UPDATE_STATUS_SUCCESS:
             return state.map((todo) => {
                 if(action.payload.id === todo.id){
-                    return Object.assign({}, todo, {status: action.payload.status})
+                    return Object.assign({}, todo, {
+                        status: action.payload.status
+                    })
                 }
 
                 return todo;

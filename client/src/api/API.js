@@ -7,12 +7,15 @@ export const initiate = (dispatch) => {
     axios.interceptors.response.use(response => {
         return response;
     }, function (error) {
-        if (401 === error.response.status && window.location.pathname !== '/login') {
+        if (error.response !== undefined && 401 === error.response.status && window.location.pathname !== '/login') {
             window.location = '/login';
             localStorage.removeItem('user');
             dispatch({type: USER_DISCONNECTED});
         } else {
-            return Promise.reject(error);
+            return Promise.reject({
+                code: error.response !== undefined ? error.response.status : null,
+                message: error.response !== undefined ? error.response.data.message : "Server is not available"
+            });
         }
     });
 };
