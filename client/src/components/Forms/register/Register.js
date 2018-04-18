@@ -1,7 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, {Component} from "react";
 import {Button, FormControl, FormGroup} from "react-bootstrap";
-import './css/Register.css';
+import '../css/Forms.css';
+import {LinkContainer} from "react-router-bootstrap";
+import PropTypes from "prop-types";
+import ErrorLabelContainer from "../../ErrorLabel/containers/ErrorLabelContainer";
 
 export default class Register extends Component {
     constructor(props) {
@@ -32,9 +34,9 @@ export default class Register extends Component {
         this.props.onRegister(this.state);
     }
 
-    render(){
+    render() {
         return (
-            <div className="register-main">
+            <div className="form-main">
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="name" bsSize="large">
                         <FormControl
@@ -88,7 +90,17 @@ export default class Register extends Component {
                     >
                         Register
                     </Button>
+                    <LinkContainer to="/login">
+                        <Button
+                            bsStyle="primary"
+                            block
+                            bsSize="large"
+                        >
+                            Login
+                        </Button>
+                    </LinkContainer>
                 </form>
+                <ErrorLabelContainer/>
             </div>
         )
     }

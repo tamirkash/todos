@@ -1,83 +1,72 @@
-import axios from 'axios';
+import { makeCall as makeAPICall } from '../api/API';
 
-export const TODO_REMOVED = 'TODO_REMOVED';
-export const GOT_TODOS = 'GOT_TODOS';
-export const TODO_ADDED = 'TODO_ADDED';
-export const TODOS_REORDERED = 'TODOS_REORDERED';
-export const GOT_STATUS_LIST = 'GOT_STATUS_LIST';
-export const STATUS_UPDATED = 'STATUS_UPDATED';
+export const REMOVE_TODO_REQUEST = 'REMOVE_TODO_REQUEST';
+export const REMOVE_TODO_SUCCESS = 'REMOVE_TODO_SUCCESS';
+export const GET_TODOS_REQUEST = 'GET_TODOS_REQUEST';
+export const GET_TODOS_SUCCESS = 'GET_TODOS_SUCCESS';
+export const ADD_TODO_REQUEST = 'ADD_TODO_REQUEST';
+export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';
+export const REORDER_TODO_REQUEST = 'REORDER_TODO_REQUEST';
+export const REORDER_TODO_SUCCESS = 'REORDER_TODO_SUCCESS';
+export const GET_STATUS_LIST_REQUEST = 'GET_STATUS_LIST_REQUEST';
+export const GET_STATUS_LIST_SUCCESS = 'GET_STATUS_LIST_SUCCESS';
+export const UPDATE_STATUS_REQUEST = 'UPDATE_STATUS_REQUEST';
+export const UPDATE_STATUS_SUCCESS = 'UPDATE_STATUS_SUCCESS';
 export const STATUS_OPEN_CHANGE = 'STATUS_OPEN_CHANGE';
-export const USER_CONNECTED = 'USER_CONNECTED';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 export const USER_DISCONNECTED = 'USER_DISCONNECTED';
+export const PAGE_UNMOUNT = 'PAGE_UNMOUNT';
 
 export const removeTodo = (id) => {
-  const request = axios.delete('http://localhost:3001/todos/' + id);
-
   return (dispatch) => {
-    request.then(() => {
-      dispatch({type: TODO_REMOVED, payload: id})
-    });
+      makeAPICall(`todos/${id}`, 'delete').then(() => {
+        dispatch({type: REMOVE_TODO_SUCCESS, payload: id})
+      });
   };
 };
 
 export const fetchTodos = () => {
-    const request = axios('http://localhost:3001/todos/', {
-        method: "get"
-    });
-
-
     return (dispatch) => {
-        request.then(({data}) => {
-            dispatch({type: GOT_TODOS, payload: data.todos})
-        });
+        makeAPICall('todos', 'get').then(({data}) => {
+            dispatch({type: GET_TODOS_SUCCESS, payload: data.todos})
+        },
+            error => console.log(error));
     };
 };
 
 export const addTodo = (text) => {
-    const request = axios({
-        url: 'http://localhost:3001/todos/',
-        method: "post",
-        data: {text}
-    });
-
     return (dispatch) => {
-        request.then(({data}) => {
-            dispatch({type: TODO_ADDED, payload: data.todo})
+        makeAPICall('todos', 'post', {text}).then(({data}) => {
+            dispatch({type: ADD_TODO_SUCCESS, payload: data.todo})
         });
     };
 };
 
 export const reorderTodos = (todos) => {
-    const request = axios.put('http://localhost:3001/todos/reorder', {
-        todos
-    });
-
     return (dispatch) => {
-        request.then(() => {
-            dispatch({type: TODOS_REORDERED, payload: todos})
+        makeAPICall('todos/reorder', 'put', {todos}).then(() => {
+            dispatch({type: REORDER_TODO_SUCCESS, payload: todos})
         });
     };
 };
 
 export const getStatusList = () => {
-    const request = axios.get('http://localhost:3001/todos/status-list');
-
     return (dispatch) => {
-        request.then(({data}) => {
-            dispatch({type: GOT_STATUS_LIST, payload: data.statusList})
+        makeAPICall('todos/status-list', 'get').then(({data}) => {
+            dispatch({type: GET_STATUS_LIST_SUCCESS, payload: data.statusList})
         });
     }
 };
 
 export const updateStatus = (id, status) => {
-    const request = axios.put('http://localhost:3001/todos/status', {
-        id,
-        status
-    });
-
     return (dispatch) => {
-        request.then(() => {
-           dispatch({type: STATUS_UPDATED, payload: {id, status}})
+        makeAPICall('todos/status', 'put', {id, status}).then(() => {
+           dispatch({type: UPDATE_STATUS_SUCCESS, payload: {id, status}})
         });
     }
 };
@@ -90,46 +79,50 @@ export const updateStatusIsOpen = (isOpen) => {
 };
 
 export const login = ({username, password}) => {
-    const request = axios("http://localhost:3001/login", {
-        method: "post",
-        data: {
-            username,
-            password
-        }
-    });
-
     return (dispatch) => {
-        request.then(({data}) => {
-            localStorage.setItem('user', data.username);
-            dispatch({type: USER_CONNECTED, payload: data.username});
-        }).catch(e => alert(e));
+        dispatch({type: LOGIN_REQUEST});
+        makeAPICall('login', 'post', {username, password}).then(
+            (res) => {
+                localStorage.setItem('user', res.data.username);
+                dispatch({
+                    type: LOGIN_SUCCESS,
+                    payload: res.data.username
+                });
+            },
+            error => dispatch({
+                type: LOGIN_FAILURE,
+                payload: error.response.status === 401 ? "Invalid username or password" : "Something went wrong"
+            })
+        )
     }
-}
+};
 
 export const logout = () => {
-    const request = axios("http://localhost:3001/logout", {
-        method: "put"
-    });
-
     return (dispatch) => {
-        request.then(() => {
+        makeAPICall('logout', 'put').then(() => {
             localStorage.removeItem('user');
             dispatch({type: USER_DISCONNECTED});
         });
     }
-}
+};
 
 export const register = (input) => {
-    const request = axios.post("http://localhost:3001/register", {
-        ...input
-    });
-
     return (dispatch) => {
-        request.then(() => {
-           dispatch(login(input))
-        }).catch(e => {
-            console.log(e.response);
-            alert(e.response.data.error || "error");
-        });
+        dispatch({type: REGISTER_REQUEST});
+        makeAPICall('register', 'post', {...input}).then(
+            () => {
+                dispatch({type: REGISTER_SUCCESS});
+                dispatch(login(input));
+            },
+            error => dispatch({
+                type: REGISTER_FAILURE,
+                payload: error.response.data.message || "Something went wrong"
+            }))
     }
-}
+};
+
+export const onUnmount = () => {
+    return {
+        type: PAGE_UNMOUNT
+    }
+};

@@ -1,24 +1,24 @@
 import {
-    TODO_REMOVED,
-    GOT_TODOS,
-    TODO_ADDED,
-    TODOS_REORDERED, STATUS_UPDATED
+    REMOVE_TODO_SUCCESS,
+    GET_TODOS_SUCCESS,
+    ADD_TODO_SUCCESS,
+    REORDER_TODO_SUCCESS, UPDATE_STATUS_SUCCESS
 } from '../actions/actions';
 
 const todos = (state = [], action) => {
     switch (action.type) {
-        case GOT_TODOS:
+        case GET_TODOS_SUCCESS:
             return action.payload;
-        case TODO_ADDED:
+        case ADD_TODO_SUCCESS:
             return [
                 ...state,
                 action.payload
             ];
-        case TODO_REMOVED:
+        case REMOVE_TODO_SUCCESS:
             return state.filter(todo => todo._id !== action.payload);
-        case TODOS_REORDERED:
+        case REORDER_TODO_SUCCESS:
             return action.payload;
-        case STATUS_UPDATED:
+        case UPDATE_STATUS_SUCCESS:
             return state.map((todo) => {
                 if(action.payload.id === todo.id){
                     return Object.assign({}, todo, {status: action.payload.status})

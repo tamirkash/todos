@@ -1,7 +1,7 @@
-import * as axios from "axios";
+import axios from "axios";
 import {USER_DISCONNECTED} from "../actions/actions";
 
-const initiateAxios = (dispatch) => {
+export const initiate = (dispatch) => {
     axios.defaults.withCredentials = true;
 
     axios.interceptors.response.use(response => {
@@ -15,6 +15,11 @@ const initiateAxios = (dispatch) => {
             return Promise.reject(error);
         }
     });
-}
+};
 
-export default initiateAxios;
+export const makeCall = (path, method, data) => {
+    return axios(`http://localhost:3001/${path}`, {
+        method,
+        data
+    })
+};

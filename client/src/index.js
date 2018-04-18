@@ -8,11 +8,11 @@ import registerServiceWorker from './registerServiceWorker';
 import thunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
 import reducers from "./reducers";
-import initiateAxios from "./api/axios";
+import {initiate as initiateAPI} from "./api/API";
 
 const store = createStore(reducers,
                 applyMiddleware(thunk));
-initiateAxios();
+initiateAPI(store.dispatch);
 
 ReactDOM.render(
   <Provider store={store}>

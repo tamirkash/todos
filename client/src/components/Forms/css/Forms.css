@@ -1,0 +1,14 @@
+@media all and (min-width: 480px) {
+    .form-main form {
+        padding-top: 50px;
+    }
+
+    .form-main, .error-label {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+
+    .error-label {
+        margin-top: 20px;
+    }
+}

@@ -45,7 +45,7 @@ router.post('/', [
     const errors = validationResult(req).formatWith(errorFormatter);
 
     if(!errors.isEmpty()){
-        res.status(400).json({error: errors.array({ onlyFirstError: true })});
+        res.status(400).json({message: errors.array({ onlyFirstError: true })});
     } else {
         const userInput = matchedData(req);
         const newUser = new User({
@@ -57,11 +57,11 @@ router.post('/', [
 
         User.getUserByUsername(userInput.username, (err, user) => {
             if(user){
-                res.status(409).json({error: "username already exist"})
+                res.status(409).json({message: "username already exist"})
             } else {
                 User.getUserByEmail(userInput.email, (err, user) => {
                     if(user) {
-                        res.status(409).json({error: "email already exist"})
+                        res.status(409).json({message: "email already exist"})
                     } else {
                         User.createUser(newUser, (err, user) => {
                             if(err){

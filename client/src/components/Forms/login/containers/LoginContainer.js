@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Login from "../Login";
-import {login} from "../../../actions/actions";
+import {login} from "../../../../actions/actions";
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -8,6 +8,6 @@ const mapDispatchToProps = dispatch => {
             dispatch(login(credentials))
         }
     }
-}
+};
 
 export default connect(null, mapDispatchToProps)(Login);

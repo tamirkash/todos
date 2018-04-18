@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {Button, FormControl, FormGroup} from "react-bootstrap";
-import "./css/Login.css";
+import "../css/Forms.css";
 import {LinkContainer} from "react-router-bootstrap";
+import ErrorLabelContainer from "../../ErrorLabel/containers/ErrorLabelContainer";
 
 export default class Login extends Component {
     constructor(props) {
@@ -22,16 +23,16 @@ export default class Login extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-    }
+    };
 
     handleSubmit = event => {
         event.preventDefault();
         this.props.onLogin(this.state);
-    }
+    };
 
     render(){
         return (
-            <div className="login-main">
+            <div className="form-main">
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="username" bsSize="large">
                         <FormControl
@@ -57,10 +58,11 @@ export default class Login extends Component {
                         disabled={!this.validateForm()}
                         type="submit"
                     >
-                        Let me in.
+                        Login
                     </Button>
                     <LinkContainer to="/register">
                         <Button
+                            bsStyle="primary"
                             block
                             bsSize="large"
                         >
@@ -68,11 +70,13 @@ export default class Login extends Component {
                         </Button>
                     </LinkContainer>
                 </form>
+                <ErrorLabelContainer />
             </div>
         )
     }
 }
 
 Login.propTypes = {
-    onLogin: PropTypes.func.isRequired
+    onLogin: PropTypes.func.isRequired,
+    errorMsg: PropTypes.object
 };

@@ -5,11 +5,11 @@ const express = require('express'),
     User = require('../models/user');
 
 passport.use(new LocalStrategy(
-    function(username, password, done) {
+    (username, password, done) => {
         User.getUserByUsername(username, function (err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
+                return done(null, false);
             }
 
             User.comparePassword(password, user.password, (err, isMatch) => {
@@ -17,26 +17,26 @@ passport.use(new LocalStrategy(
                 if(isMatch){
                     return done(null, user);
                 } else {
-                    return done(null, false, { message: 'Incorrect password.' });
+                    return done(null, false);
                 }
             })
         });
     }
 ));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-    User.getUserById(id, function(err, user) {
+passport.deserializeUser((id, done) => {
+    User.getUserById(id, (err, user) => {
         done(err, user);
     });
 });
 
 router.post('/',
     passport.authenticate('local'),
-    function(req, res) {
+    (req, res) => {
         res.json({username: req.user.username})
     });
 
