@@ -1,6 +1,7 @@
 import {SortableContainer} from "react-sortable-hoc";
 import React from "react";
 import TodoContainer from "./containers/TodoContainer";
+import LoadedComponent from "../loaded/LoadedComponent";
 
 const SortableTodoList = SortableContainer(({todos, onRemove, listenToHover}) => {
     const containerStyle = `${listenToHover ? 'todo-list-container todo-list-container-listen-hover' :
@@ -19,4 +20,4 @@ const SortableTodoList = SortableContainer(({todos, onRemove, listenToHover}) =>
     );
 });
 
-export default SortableTodoList;
+export default LoadedComponent('todos')(SortableTodoList);

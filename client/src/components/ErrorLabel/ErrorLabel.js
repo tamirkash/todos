@@ -8,10 +8,7 @@ export default class ErrorLabel extends React.Component {
 
     render() {
         return (
-            this.props.errorMsg ?
-                <div className="error-label">{this.props.errorMsg}</div>
-                :
-                null
+            <div className="error-label">{this.props.errorMsg}</div>
         )
     }
 }

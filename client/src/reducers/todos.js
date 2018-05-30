@@ -2,7 +2,12 @@ import {
     REMOVE_TODO_SUCCESS,
     GET_TODOS_SUCCESS,
     ADD_TODO_SUCCESS,
-    REORDER_TODO_SUCCESS, UPDATE_STATUS_SUCCESS
+    REORDER_TODO_SUCCESS,
+    UPDATE_STATUS_SUCCESS,
+    ADD_TODO_FAILURE,
+    REMOVE_TODO_FAILURE,
+    REORDER_TODO_FAILURE,
+    GET_TODOS_FAILURE
 } from '../actions/actions';
 
 const todos = (state = [], action) => {
@@ -28,6 +33,11 @@ const todos = (state = [], action) => {
 
                 return todo;
             });
+        case REORDER_TODO_FAILURE:
+        case REMOVE_TODO_FAILURE:
+        case ADD_TODO_FAILURE:
+            return [...state];
+        case GET_TODOS_FAILURE:
         default:
             return state
     }

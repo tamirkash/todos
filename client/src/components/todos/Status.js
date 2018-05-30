@@ -8,8 +8,6 @@ export default class StatusDropdown extends React.Component {
         this.state = {
             status: this.props.status
         };
-
-        this.onStatusUpdated = this.onStatusUpdated.bind(this);
     }
 
     onStatusUpdated(status){

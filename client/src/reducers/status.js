@@ -1,4 +1,7 @@
-import {GET_STATUS_LIST_SUCCESS,STATUS_OPEN_CHANGE} from "../actions/actions";
+import {
+    GET_STATUS_LIST_SUCCESS,
+    STATUS_OPEN_CHANGE
+} from "../actions/actions";
 
 const status = (state = {statusList: [], isStatusOpen: false}, action) => {
     switch(action.type){
@@ -9,7 +12,7 @@ const status = (state = {statusList: [], isStatusOpen: false}, action) => {
         case STATUS_OPEN_CHANGE:
             return Object.assign({}, state, {
                 isStatusOpen: action.payload
-            })
+            });
         default:
             return state;
     }

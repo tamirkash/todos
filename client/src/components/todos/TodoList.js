@@ -4,19 +4,17 @@ import SortableTodoList from "./SortableTodoList";
 import { arrayMove } from 'react-sortable-hoc';
 import './css/Todos.css';
 
-export class TodoList extends React.Component {
-    constructor(){
-        super();
+class TodoList extends React.Component {
+    constructor(props){
+        super(props);
 
         this.state ={
-            todos: [],
             listenToHover: true
         }
     }
 
     componentDidMount(){
         this.props.fetchTodos();
-        this.props.getStatusList();
     }
 
     componentWillReceiveProps(props){
@@ -51,14 +49,16 @@ export class TodoList extends React.Component {
                 onSortStart={this.onSortStart}
                 helperClass="todo-list-item"
                 onRemove={this.props.removeTodo}
-                useDragHandle={true}/>
+                useDragHandle={true}
+            />
         )
     }
 }
 
 TodoList.propTypes = {
-    getStatusList: PropTypes.func.isRequired,
     removeTodo: PropTypes.func.isRequired,
     todos: PropTypes.array.isRequired,
     fetchTodos: PropTypes.func.isRequired
 };
+
+export default TodoList;

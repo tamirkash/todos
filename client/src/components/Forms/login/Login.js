@@ -1,82 +1,38 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {Button, FormControl, FormGroup} from "react-bootstrap";
-import "../css/Forms.css";
-import {LinkContainer} from "react-router-bootstrap";
-import ErrorLabelContainer from "../../ErrorLabel/containers/ErrorLabelContainer";
+import FormWithLinks from "../FormWithLinks";
+import Form from "../Form";
 
-export default class Login extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            username: "",
-            password: ""
-        };
+class Login extends Component {
+    validateForm(inputs) {
+        return inputs.username.length > 0 && inputs.password.length > 0;
     }
-
-    validateForm() {
-        return this.state.username.length > 0 && this.state.password.length > 0;
-    }
-
-    handleChange = event => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
-    };
-
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.onLogin(this.state);
-    };
 
     render(){
         return (
-            <div className="form-main">
-                <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="username" bsSize="large">
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.username}
-                            onChange={this.handleChange}
-                            placeholder="Username"
-                        />
-                    </FormGroup>
-                    <FormGroup controlId="password" bsSize="large">
-                        <FormControl
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            type="password"
-                            placeholder="Password"
-                        />
-                    </FormGroup>
-                    <Button
-                        bsStyle="primary"
-                        block
-                        bsSize="large"
-                        disabled={!this.validateForm()}
-                        type="submit"
-                    >
-                        Login
-                    </Button>
-                    <LinkContainer to="/register">
-                        <Button
-                            bsStyle="primary"
-                            block
-                            bsSize="large"
-                        >
-                            Register
-                        </Button>
-                    </LinkContainer>
-                </form>
-                <ErrorLabelContainer />
-            </div>
+            <Form
+                onSubmit={this.props.onLogin}
+                validateForm={this.validateForm}
+                inputs={[
+                    {
+                        name: "username",
+                        type: "text",
+                        placeholder: "Username"
+                    },
+                    {
+                        name: "password",
+                        type: "password",
+                        placeholder: "Password"
+                    }
+                ]}
+                submitLabel="Login"
+            />
         )
     }
 }
 
 Login.propTypes = {
-    onLogin: PropTypes.func.isRequired,
-    errorMsg: PropTypes.object
+    onLogin: PropTypes.func.isRequired
 };
+
+export default FormWithLinks([{ label: "Register", path: "/register"}])(Login);

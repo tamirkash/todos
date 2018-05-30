@@ -8,9 +8,12 @@ export const initiate = (dispatch) => {
         return response;
     }, function (error) {
         if (error.response !== undefined && 401 === error.response.status && window.location.pathname !== '/login') {
-            window.location = '/login';
             localStorage.removeItem('user');
             dispatch({type: USER_DISCONNECTED});
+
+            return Promise.reject({
+               message: "user not connected"
+            });
         } else {
             return Promise.reject({
                 code: error.response !== undefined ? error.response.status : null,

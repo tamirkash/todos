@@ -1,6 +1,6 @@
 @media all and (min-width: 480px) {
     .form-main form {
-        padding-top: 50px;
+        padding-top: 30px;
     }
 
     .form-main, .error-label {
@@ -9,6 +9,11 @@
     }
 
     .error-label {
-        margin-top: 20px;
+        height: 20px;
+        margin-bottom: 10px;
+    }
+
+    .form-main > a {
+        margin-top: 5px;
     }
 }
